@@ -14,4 +14,21 @@
         <module>retail-service</module>
         <module>retail-web</module>
     </modules>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <activationProfile>dev</activationProfile>
+            </properties>
+        </profile>
+        <profile>
+            <id>release</id>
+            <properties>
+                <activationProfile>release</activationProfile>
+            </properties>
+        </profile>
+    </profiles>
 </project>

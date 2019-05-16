@@ -1,0 +1,19 @@
+server:
+  port: 8081
+spring:
+  profiles:
+    active: @activationProfile@
+  application:
+    name: e-commerce-api
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+  freemarker:
+    suffix: .html
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss.SSS
+    time-zone: GMT+8
+pagehelper:
+  helper-dialect: mysql
+mybatis:
+  mapper-locations: classpath:mappers/*.mapper.xml
+  type-aliases-package: club.xyes.zkh.ecommerce.common.entity
