@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   profiles:
-    active: @activationProfile@
+    active: dev
   application:
     name: e-commerce-api
   datasource:
