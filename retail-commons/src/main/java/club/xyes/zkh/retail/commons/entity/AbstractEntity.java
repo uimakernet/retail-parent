@@ -1,6 +1,7 @@
 package club.xyes.zkh.retail.commons.entity;
 
 import club.xyes.zkh.retail.commons.context.ApplicationConstants;
+import club.xyes.zkh.retail.commons.utils.DateTimeUtils;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -40,4 +41,19 @@ public class AbstractEntity {
      */
     @Column(name = "deleted", nullable = false)
     private Boolean deleted;
+
+    /**
+     * 初始化BaseEntity中的属性
+     */
+    public void init() {
+        updateTime = createTime = DateTimeUtils.now();
+        deleted = false;
+    }
+
+    /**
+     * 刷新更新时间
+     */
+    public void touch() {
+        updateTime = DateTimeUtils.now();
+    }
 }

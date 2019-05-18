@@ -18,6 +18,7 @@
                u.promo_code,
                u.team_header_level,
                u.leader_id,
+               u.wx_token_json,
                u.create_time,
                u.update_time,
                u.deleted

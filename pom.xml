@@ -13,6 +13,7 @@
         <module>retail-repository</module>
         <module>retail-service</module>
         <module>retail-web</module>
+        <module>retail-wechat</module>
     </modules>
     <profiles>
         <profile>

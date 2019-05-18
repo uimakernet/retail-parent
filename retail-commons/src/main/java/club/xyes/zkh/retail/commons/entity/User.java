@@ -109,4 +109,9 @@ public class User extends AbstractEntity {
      * 关联的上级达人信息
      */
     private User leader;
+    /**
+     * 微信AccessTokenJson
+     */
+    @Column(name = "wx_token_json")
+    private String wxTokenJson;
 }

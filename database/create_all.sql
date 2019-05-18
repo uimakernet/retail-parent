@@ -196,12 +196,12 @@ create table t_user
     promo_code         varchar(255),
     team_header_level  int(2),
     leader_id          int(10),
+    wx_token_json      varchar(255),
     create_time        datetime not null,
     update_time        datetime not null,
     deleted            bit      not null,
     primary key (id)
 );
-
 alter table t_cash_application
     add constraint FK_pk_cash_application_user foreign key (user_id)
         references t_user (id) on delete restrict on update restrict;
