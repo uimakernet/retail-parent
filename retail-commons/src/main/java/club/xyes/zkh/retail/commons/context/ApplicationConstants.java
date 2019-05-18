@@ -39,7 +39,7 @@ public class ApplicationConstants {
         /**
          * Mapper组建所在的包名
          */
-        public static final String MAPPER_PACKAGE = "club.xyes.zkh.retail.dao.mapper";
+        public static final String MAPPER_PACKAGE = "club.xyes.zkh.retail.repository.dao.mapper";
         /**
          * 控制器(API)所在的包
          */

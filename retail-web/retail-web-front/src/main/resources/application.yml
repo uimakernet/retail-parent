@@ -16,4 +16,4 @@ pagehelper:
   helper-dialect: mysql
 mybatis:
   mapper-locations: classpath:mappers/*.mapper.xml
-  type-aliases-package: club.xyes.zkh.ecommerce.common.entity
+  type-aliases-package: club.xyes.zkh.retail.common.entity

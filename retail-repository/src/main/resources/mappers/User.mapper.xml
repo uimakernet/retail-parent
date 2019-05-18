@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.xyes.zkh.retail.repository.dao.mapper.UserMapper">
+    <sql id="select">
+        select u.id,
+               u.nickname,
+               u.name,
+               u.phone,
+               u.wx_open_id,
+               u.wx_avatar,
+               u.role,
+               u.position_longitude,
+               u.position_latitude,
+               u.position,
+               u.direct_income,
+               u.team_income,
+               u.withdrawals,
+               u.promo_code,
+               u.team_header_level,
+               u.leader_id,
+               u.create_time,
+               u.update_time,
+               u.deleted
+        from t_user as u
+        where u.deleted != 1
+    </sql>
+</mapper>

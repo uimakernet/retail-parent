@@ -1,8 +1,9 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/5/16 星期四 11:06:34                       */
+/* Created on:     2019/5/18 星期六 10:44:41                       */
 /*==============================================================*/
 
+drop table if exists t_order;
 
 drop table if exists t_cash_application;
 
@@ -13,8 +14,6 @@ drop table if exists t_general_time_range;
 drop table if exists t_special_time_slot;
 
 drop table if exists t_special_time_range;
-
-drop table if exists t_order;
 
 drop table if exists t_commodity;
 
@@ -27,7 +26,7 @@ drop table if exists t_user;
 /*==============================================================*/
 create table t_cash_application
 (
-    id          int(10)  not null,
+    id          int(10)  not null auto_increment,
     user_id     int(10)  not null,
     amount      int(6)   not null,
     status      int(2)   not null,
@@ -42,7 +41,7 @@ create table t_cash_application
 /*==============================================================*/
 create table t_commodity
 (
-    id                     int(10)      not null,
+    id                     int(10)      not null auto_increment,
     store_id               int(10)      not null,
     buy_limit              int(4),
     name                   varchar(255) not null,
@@ -65,12 +64,13 @@ create table t_commodity
     deleted                bit          not null,
     primary key (id)
 );
+
 /*==============================================================*/
 /* Table: t_general_time_range                                  */
 /*==============================================================*/
 create table t_general_time_range
 (
-    id           int(10)  not null,
+    id           int(10)  not null auto_increment,
     commodity_id int(10)  not null,
     day_of_week  int(1)   not null,
     create_time  datetime not null,
@@ -78,12 +78,13 @@ create table t_general_time_range
     deleted      bit      not null,
     primary key (id)
 );
+
 /*==============================================================*/
 /* Table: t_general_time_slot                                   */
 /*==============================================================*/
 create table t_general_time_slot
 (
-    id                int(10)  not null,
+    id                int(10)  not null auto_increment,
     time_range_id     int(10)  not null,
     start_time        time     not null,
     end_time          time     not null,
@@ -100,11 +101,11 @@ create table t_general_time_slot
 /*==============================================================*/
 create table t_order
 (
-    id                    int(10)      not null,
+    id                    int(10)      not null auto_increment,
     user_id               int(10)      not null,
     commodity_id          int(10)      not null,
     quantity              int(3)       not null,
-    store_id              int(10)      not null,
+    shop_id               int(10)      not null,
     amount                int(10)      not null,
     username              varchar(255) not null,
     phone                 varchar(100) not null,
@@ -119,12 +120,13 @@ create table t_order
     deleted               bit          not null,
     primary key (id)
 );
+
 /*==============================================================*/
 /* Table: t_special_time_range                                  */
 /*==============================================================*/
 create table t_special_time_range
 (
-    id           int(10)  not null,
+    id           int(10)  not null auto_increment,
     commodity_id int(10)  not null,
     action_date  date     not null,
     create_time  datetime not null,
@@ -138,7 +140,7 @@ create table t_special_time_range
 /*==============================================================*/
 create table t_special_time_slot
 (
-    id                int(10)  not null,
+    id                int(10)  not null auto_increment,
     time_range_id     int(10)  not null,
     start_time        time     not null,
     end_time          time     not null,
@@ -155,7 +157,7 @@ create table t_special_time_slot
 /*==============================================================*/
 create table t_store
 (
-    id          int(10)      not null,
+    id          int(10)      not null auto_increment,
     name        varchar(255) not null,
     keeper_name varchar(255) not null,
     phone       varchar(255) not null,
@@ -178,7 +180,7 @@ create table t_store
 /*==============================================================*/
 create table t_user
 (
-    id                 int(10)  not null,
+    id                 int(10)  not null auto_increment,
     nickname           varchar(255),
     name               varchar(255),
     phone              varchar(100),
@@ -199,7 +201,7 @@ create table t_user
     deleted            bit      not null,
     primary key (id)
 );
-# alter table t_user drop column total_income;
+
 alter table t_cash_application
     add constraint FK_pk_cash_application_user foreign key (user_id)
         references t_user (id) on delete restrict on update restrict;

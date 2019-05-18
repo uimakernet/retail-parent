@@ -103,7 +103,7 @@ public class User extends AbstractEntity {
     /**
      * 上级达人ID
      */
-    @Column(name = "leaderId")
+    @Column(name = "leader_id")
     private Integer leaderId;
     /**
      * 关联的上级达人信息
