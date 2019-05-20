@@ -1,10 +1,12 @@
 package club.xyes.zkh.retail.commons.entity;
 
+import club.xyes.zkh.retail.commons.context.ApplicationConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -121,4 +123,13 @@ public class Commodity extends AbstractEntity {
      */
     @Column(name = "status")
     private Integer status;
+
+    /**
+     * 解析图片列表
+     */
+    public void parseImageList() {
+        if (images != null) {
+            imageList = Arrays.asList(images.split(ApplicationConstants.IMAGE_DELIMITER));
+        }
+    }
 }

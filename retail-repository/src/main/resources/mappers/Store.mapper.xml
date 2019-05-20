@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.xyes.zkh.retail.repository.dao.mapper.StoreMapper">
+    <sql id="select">
+        select s.id,
+               s.name,
+               s.keeper_name,
+               s.phone,
+               s.longitude,
+               s.latitude,
+               s.province,
+               s.city,
+               s.region,
+               s.address,
+               s.login_name,
+               s.password,
+               s.create_time,
+               s.update_time,
+               s.deleted
+        from t_store as s
+        where s.deleted != 1
+    </sql>
+</mapper>

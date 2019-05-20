@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.xyes.zkh.retail.repository.dao.mapper.CommodityMapper">
+    <sql id="select">
+        select c.id,
+               c.store_id,
+               c.buy_limit,
+               c.name,
+               c.description,
+               c.images,
+               c.original_price,
+               c.current_price,
+               c.stock_count,
+               c.sale_count,
+               c.commission_1,
+               c.commission_2,
+               c.commission_3,
+               c.need_appointment,
+               c.buy_end_time,
+               c.appointment_start_time,
+               c.appointment_end_time,
+               c.status,
+               c.create_time,
+               c.update_time,
+               c.deleted
+        from t_commodity as c
+        where c.deleted != 1
+    </sql>
+    <resultMap id="base" type="club.xyes.zkh.retail.commons.entity.Commodity">
+        <id column="id" property="id"/>
+        <result column="store_id" property="storeId"/>
+        <result column="buy_limit" property="buyLimit"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="images" property="images"/>
+        <result column="original_price" property="originalPrice"/>
+        <result column="current_price" property="currentPrice"/>
+        <result column="stock_count" property="stockCount"/>
+        <result column="sale_count" property="saleCount"/>
+        <result column="commission_1" property="commission1"/>
+        <result column="commission_2" property="commission2"/>
+        <result column="commission_3" property="commission3"/>
+        <result column="need_appointment" property="needAppointment"/>
+        <result column="buy_end_time" property="buyEndTime"/>
+        <result column="appointment_start_time" property="appointmentStartTime"/>
+        <result column="appointment_end_time" property="appointmentEndTime"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+    <select id="selectAvailableOrderByCreateTimeDesc" resultMap="base">
+        <include refid="select"/>
+        order by c.create_time desc
+    </select>
+</mapper>

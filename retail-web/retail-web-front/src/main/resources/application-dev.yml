@@ -6,6 +6,9 @@ spring:
   output:
     ansi:
       enabled: always
+site:
+  staticServer: http://static.xbb.com/retail
+  staticFilePath: D:\xbb\server\nginx-1.14.2\html\retail
 logging:
   level:
     club.xyes.zkh.retail: debug

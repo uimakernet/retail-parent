@@ -18,7 +18,7 @@ import java.util.Date;
  * @data 2019/5/16 0016
  */
 @Data
-public class AbstractEntity {
+public abstract class AbstractEntity {
     /**
      * Id
      */

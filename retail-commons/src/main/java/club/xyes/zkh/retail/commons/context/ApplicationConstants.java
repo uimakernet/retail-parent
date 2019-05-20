@@ -31,6 +31,10 @@ public class ApplicationConstants {
      * 日期格式
      */
     public static final String DATE_FORMAT = "yyyy-MM-dd";
+    /**
+     * 图片分隔符
+     */
+    public static final String IMAGE_DELIMITER = ",";
 
     /**
      * 上下文 系统常量
