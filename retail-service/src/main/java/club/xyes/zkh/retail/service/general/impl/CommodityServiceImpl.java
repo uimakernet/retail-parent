@@ -1,6 +1,7 @@
 package club.xyes.zkh.retail.service.general.impl;
 
 import club.xyes.zkh.retail.commons.entity.Commodity;
+import club.xyes.zkh.retail.commons.exception.ResourceNotFoundException;
 import club.xyes.zkh.retail.repository.dao.mapper.CommodityMapper;
 import club.xyes.zkh.retail.service.basic.impl.AbstractServiceImpl;
 import club.xyes.zkh.retail.service.general.CommodityService;
@@ -30,5 +31,14 @@ public class CommodityServiceImpl extends AbstractServiceImpl<Commodity> impleme
         return PageHelper
                 .startPage(page, rows)
                 .doSelectPageInfo(() -> commodityMapper.selectAvailableOrderByCreateTimeDesc());
+    }
+
+    @Override
+    public Commodity requireFetchAll(Integer id) {
+        Commodity commodity = commodityMapper.selectByIdFetchAll(id);
+        if (commodity == null) {
+            throw new ResourceNotFoundException(Commodity.class, id);
+        }
+        return commodity;
     }
 }

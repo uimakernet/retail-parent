@@ -26,6 +26,48 @@
         from t_commodity as c
         where c.deleted != 1
     </sql>
+    <sql id="select_with_all">
+        select c.id,
+               c.store_id,
+               c.buy_limit,
+               c.name,
+               c.description,
+               c.images,
+               c.original_price,
+               c.current_price,
+               c.stock_count,
+               c.sale_count,
+               c.commission_1,
+               c.commission_2,
+               c.commission_3,
+               c.need_appointment,
+               c.buy_end_time,
+               c.appointment_start_time,
+               c.appointment_end_time,
+               c.status,
+               c.create_time,
+               c.update_time,
+               c.deleted,
+               s.id          s_id,
+               s.name        s_name,
+               s.keeper_name s_keeper_name,
+               s.phone       s_phone,
+               s.longitude   s_longitude,
+               s.latitude    s_latitude,
+               s.province    s_province,
+               s.city        s_city,
+               s.region      s_region,
+               s.address     s_address,
+               s.login_name  s_login_name,
+               s.password    s_password,
+               s.create_time s_create_time,
+               s.update_time s_update_time,
+               s.deleted     s_deleted
+        from t_commodity as c
+                 left outer join t_store s on c.store_id = s.id
+        where c.deleted != 1
+          and s.deleted != 1
+    </sql>
     <resultMap id="base" type="club.xyes.zkh.retail.commons.entity.Commodity">
         <id column="id" property="id"/>
         <result column="store_id" property="storeId"/>
@@ -49,8 +91,32 @@
         <result column="update_time" property="updateTime"/>
         <result column="deleted" property="deleted"/>
     </resultMap>
+    <resultMap id="rm_with_all" type="club.xyes.zkh.retail.commons.entity.Commodity"
+               extends="base">
+        <association property="store" javaType="club.xyes.zkh.retail.commons.entity.Store">
+            <id column="s_id" property="id"/>
+            <result column="s_name" property="name"/>
+            <result column="s_keeper_name" property="keeperName"/>
+            <result column="s_phone" property="phone"/>
+            <result column="s_longitude" property="longitude"/>
+            <result column="s_latitude" property="latitude"/>
+            <result column="s_province" property="province"/>
+            <result column="s_city" property="city"/>
+            <result column="s_region" property="region"/>
+            <result column="s_address" property="address"/>
+            <result column="s_login_name" property="loginName"/>
+            <result column="s_password" property="password"/>
+            <result column="s_create_time" property="createTime"/>
+            <result column="s_update_time" property="updateTime"/>
+            <result column="s_deleted" property="deleted"/>
+        </association>
+    </resultMap>
     <select id="selectAvailableOrderByCreateTimeDesc" resultMap="base">
         <include refid="select"/>
         order by c.create_time desc
+    </select>
+    <select id="selectByIdFetchAll" resultMap="rm_with_all">
+        <include refid="select_with_all"/>
+        and c.id=#{id}
     </select>
 </mapper>

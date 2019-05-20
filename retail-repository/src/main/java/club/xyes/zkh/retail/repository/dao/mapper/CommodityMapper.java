@@ -2,6 +2,7 @@ package club.xyes.zkh.retail.repository.dao.mapper;
 
 import club.xyes.zkh.retail.commons.entity.Commodity;
 import club.xyes.zkh.retail.repository.dao.AbstractMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,4 +23,12 @@ public interface CommodityMapper extends AbstractMapper<Commodity> {
      * @return Commodity List
      */
     List<Commodity> selectAvailableOrderByCreateTimeDesc();
+
+    /**
+     * 通过ID查询商铺 同时抓取出关联对象
+     *
+     * @param id ID
+     * @return Commodity
+     */
+    Commodity selectByIdFetchAll(@Param("id") Integer id);
 }

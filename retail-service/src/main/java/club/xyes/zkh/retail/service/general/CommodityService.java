@@ -12,4 +12,11 @@ import club.xyes.zkh.retail.service.basic.AbstractService;
  * @data 2019/5/20 0020
  */
 public interface CommodityService extends AbstractService<Commodity> {
+    /**
+     * 通过ID查询商品 同时抓取出关联对象
+     *
+     * @param id ID
+     * @return Commodity with all
+     */
+    Commodity requireFetchAll(Integer id);
 }
