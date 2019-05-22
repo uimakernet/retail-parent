@@ -31,6 +31,18 @@ public class User extends AbstractEntity {
      */
     public static final int ROLE_CAPTAIN = 0x03;
     /**
+     * 初级队长
+     */
+    public static final int LEVEL_PRIMARY = 0x01;
+    /**
+     * 中级队长
+     */
+    public static final int LEVEL_MIDDLE = 0x02;
+    /**
+     * 高级队长
+     */
+    public static final int LEVEL_SENIOR = 0x03;
+    /**
      * 微信昵称
      */
     @Column(name = "nickname")

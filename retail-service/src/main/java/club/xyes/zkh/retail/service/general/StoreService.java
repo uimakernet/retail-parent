@@ -12,4 +12,20 @@ import club.xyes.zkh.retail.service.basic.AbstractService;
  * @data 2019/5/20 0020
  */
 public interface StoreService extends AbstractService<Store> {
+    /**
+     * 商家登录
+     *
+     * @param loginName 登录名
+     * @param password  密码
+     * @return Store
+     */
+    Store login(String loginName, String password);
+
+    /**
+     * 通过登录名查找商铺
+     *
+     * @param loginName 登录名
+     * @return 商铺对象
+     */
+    Store findByLoginName(String loginName);
 }

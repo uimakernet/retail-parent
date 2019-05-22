@@ -1,13 +1,12 @@
 package club.xyes.zkh.retail.web.front.controller;
 
 import club.xyes.zkh.retail.commons.entity.Store;
+import club.xyes.zkh.retail.commons.exception.BadRequestException;
+import club.xyes.zkh.retail.commons.utils.TextUtils;
 import club.xyes.zkh.retail.commons.vo.GeneralResult;
 import club.xyes.zkh.retail.service.general.StoreService;
 import club.xyes.zkh.retail.web.commons.controller.AbstractEntityController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 
@@ -44,5 +43,22 @@ public class StoreController extends AbstractEntityController<Store> {
     public GeneralResult<Store> detail(@PathVariable("id") Integer id) {
         @NotNull Store store = storeService.require(id);
         return GeneralResult.ok(store);
+    }
+
+    /**
+     * 商家登录
+     *
+     * @param store （username ,password）
+     * @return GR
+     */
+    @PostMapping("/login")
+    public GeneralResult<Store> login(@RequestBody Store store) {
+        if (store == null) {
+            throw new BadRequestException("没有传入参数");
+        }
+        TextUtils.notEmpty(store::getLoginName, "登录名不能为空");
+        TextUtils.notEmpty(store::getPassword, "密码不能为空");
+        Store res = storeService.login(store.getLoginName(), store.getPassword());
+        return GeneralResult.ok(res);
     }
 }
