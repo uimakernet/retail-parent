@@ -105,7 +105,7 @@ create table t_order
     user_id               int(10)      not null,
     commodity_id          int(10)      not null,
     quantity              int(3)       not null,
-    shop_id               int(10)      not null,
+    store_id               int(10)      not null,
     amount                int(10)      not null,
     username              varchar(255) not null,
     phone                 varchar(100) not null,
