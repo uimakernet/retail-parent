@@ -1,6 +1,7 @@
 package club.xyes.zkh.retail.service.general;
 
 import club.xyes.zkh.retail.commons.entity.CashApplication;
+import club.xyes.zkh.retail.commons.entity.User;
 import club.xyes.zkh.retail.service.basic.AbstractService;
 
 /**
@@ -12,4 +13,12 @@ import club.xyes.zkh.retail.service.basic.AbstractService;
  * @data 2019/5/25 0025
  */
 public interface CashApplicationService extends AbstractService<CashApplication> {
+    /**
+     * 创建新的提现申请
+     *
+     * @param user   用户
+     * @param amount 提现金额
+     * @return 提现申请对象
+     */
+    CashApplication create(User user, Integer amount);
 }

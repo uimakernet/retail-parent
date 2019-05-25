@@ -1,6 +1,9 @@
 package club.xyes.zkh.retail.service.general.impl;
 
 import club.xyes.zkh.retail.commons.entity.CashApplication;
+import club.xyes.zkh.retail.commons.entity.User;
+import club.xyes.zkh.retail.commons.exception.BadRequestException;
+import club.xyes.zkh.retail.commons.utils.WithdrawUtils;
 import club.xyes.zkh.retail.repository.dao.mapper.CashApplicationMapper;
 import club.xyes.zkh.retail.service.basic.impl.AbstractServiceImpl;
 import club.xyes.zkh.retail.service.general.CashApplicationService;
@@ -23,5 +26,19 @@ public class CashApplicationServiceImpl extends AbstractServiceImpl<CashApplicat
     public CashApplicationServiceImpl(CashApplicationMapper mapper) {
         super(mapper);
         this.generalTimeRangeMapper = mapper;
+    }
+
+    @Override
+    public CashApplication create(User user, Integer amount) {
+        int withdrawableAmount = WithdrawUtils.getWithdrawableAmount(user);
+        if (amount > withdrawableAmount) {
+            throw new BadRequestException("输入金额必须小于可提现金额");
+        }
+        CashApplication application = new CashApplication();
+        application.setUser(user);
+        application.setUserId(user.getId());
+        application.setAmount(amount);
+        application.setStatus(CashApplication.STATUS_CREATE);
+        return save(application);
     }
 }
