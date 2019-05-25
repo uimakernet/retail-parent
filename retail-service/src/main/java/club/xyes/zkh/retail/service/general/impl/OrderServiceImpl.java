@@ -4,6 +4,8 @@ import club.xyes.zkh.retail.commons.entity.Order;
 import club.xyes.zkh.retail.repository.dao.mapper.OrderMapper;
 import club.xyes.zkh.retail.service.basic.impl.AbstractServiceImpl;
 import club.xyes.zkh.retail.service.general.OrderService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +25,10 @@ public class OrderServiceImpl extends AbstractServiceImpl<Order> implements Orde
     public OrderServiceImpl(OrderMapper mapper) {
         super(mapper);
         this.orderMapper = mapper;
+    }
+
+    @Override
+    public PageInfo<Order> findByUserId(Integer userId, Integer page, Integer rows) {
+        return PageHelper.startPage(page, rows).doSelectPageInfo(() -> orderMapper.selectByUserId(userId));
     }
 }

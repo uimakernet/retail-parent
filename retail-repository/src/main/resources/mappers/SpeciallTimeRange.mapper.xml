@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.xyes.zkh.retail.repository.dao.mapper.GeneralTimeSlotMapper">
+    <sql id="select">
+        select str.id           str_id,
+               str.commodity_id str_commodity_id,
+               str.action_date  str_action_date,
+               str.create_time  str_create_time,
+               str.update_time  str_update_time,
+               str.deleted      str_deleted
+        from t_special_time_range as str
+        where str.deleted != 1;
+    </sql>
+    <resultMap id="rm_base" type="club.xyes.zkh.retail.commons.entity.SpecialTimeRange">
+        <id column="str_id" property="id"/>
+        <result column="str_commodity_id" property="commodity"/>
+        <result column="str_action_date" property="actionDate"/>
+        <result column="str_create_time" property="createTime"/>
+        <result column="str_update_time" property="updateTime"/>
+        <result column="str_deleted" property="deleted"/>
+    </resultMap>
+</mapper>

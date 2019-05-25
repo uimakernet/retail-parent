@@ -4,8 +4,15 @@ import club.xyes.zkh.retail.commons.entity.User;
 import club.xyes.zkh.retail.service.encrypt.AccessTokenEncoder;
 import com.alibaba.fastjson.JSON;
 import lombok.Data;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Create by 郭文梁 2019/5/23 0023 09:35
@@ -15,6 +22,7 @@ import javax.servlet.http.Cookie;
  * @author 郭文梁
  * @data 2019/5/23 0023
  */
+@Slf4j
 public class UserLoginCookie extends Cookie {
     /**
      * Cookie名称
@@ -23,7 +31,37 @@ public class UserLoginCookie extends Cookie {
     /**
      * 前缀
      */
-    public static final String TOKEN_PREFIX = "user/";
+    private static final String TOKEN_PREFIX = "user/";
+
+    /**
+     * 从请求中提取UserLoginCookie
+     *
+     * @param request 请求对象
+     * @param encoder 编解码器
+     * @return Cookie对象 包含用户基本信息
+     */
+    public static UserLoginCookie readFromRequest(HttpServletRequest request, AccessTokenEncoder encoder) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            return null;
+        }
+        Optional<Cookie> cookie = Arrays.stream(cookies).filter(c -> Objects.equals(c.getName(), COOKIE_NAME)).reduce((v, ignore) -> v);
+        return cookie.map(value -> readFromCookie(value, encoder)).orElse(null);
+    }
+
+    /**
+     * 从Cookie中
+     *
+     * @param cookie  Cookie
+     * @param encoder 编解码器
+     * @return Cookie
+     */
+    public static UserLoginCookie readFromCookie(Cookie cookie, AccessTokenEncoder encoder) {
+        String cookieValue = cookie.getValue();
+        String token = cookieValue.substring(TOKEN_PREFIX.length());
+        UserInfo userInfo = encoder.decode(token, UserInfo.class);
+        return new UserLoginCookie(userInfo);
+    }
 
     /**
      * 基本用户信息
@@ -93,6 +131,7 @@ public class UserLoginCookie extends Cookie {
     /**
      * 用户基本信息
      */
+    @Getter
     private UserInfo userInfo;
 
     /**
@@ -146,5 +185,15 @@ public class UserLoginCookie extends Cookie {
      */
     public String toJSON() {
         return userInfo.toJSON();
+    }
+
+    /**
+     * 将Cookie写入到响应中
+     *
+     * @param response 响应对象
+     */
+    public void write2Response(HttpServletResponse response) {
+        log.debug("Write cookie to response:[{}]=[{}]", getName(), getValue());
+        response.addCookie(this);
     }
 }

@@ -1,7 +1,9 @@
 package club.xyes.zkh.retail.web.commons.controller;
 
 import club.xyes.zkh.retail.commons.entity.AbstractEntity;
+import club.xyes.zkh.retail.commons.entity.User;
 import club.xyes.zkh.retail.service.basic.AbstractService;
+import club.xyes.zkh.retail.service.general.UserService;
 
 /**
  * Create by 郭文梁 2019/5/18 0018 12:39
@@ -27,5 +29,15 @@ public abstract class AbstractEntityController<Entity extends AbstractEntity> ex
             throw new NullPointerException("The service for entity could not be null!");
         }
         this.service = service;
+    }
+
+    /**
+     * 获取当前登录的用户
+     *
+     * @param userService 用户业务组件
+     * @return 用户信息
+     */
+    protected User requireCurrentUser(UserService userService) {
+        return userService.require(requireUserLoginCookie().getUserInfo().getUserId());
     }
 }

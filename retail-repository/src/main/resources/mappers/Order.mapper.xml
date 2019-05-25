@@ -41,4 +41,17 @@
         <result column="update_time" property="updateTime"/>
         <result column="deleted" property="deleted"/>
     </resultMap>
+    <resultMap id="rm_all" type="club.xyes.zkh.retail.commons.entity.Order" extends="rm_base">
+        <association column="user_id" property="user"
+                     select="club.xyes.zkh.retail.repository.dao.mapper.UserMapper.selectByPrimaryKey"/>
+        <association column="store_id" property="store"
+                     select="club.xyes.zkh.retail.repository.dao.mapper.StoreMapper.selectByPrimaryKey"/>
+        <association column="commodity_id" property="commodity"
+                     select="club.xyes.zkh.retail.repository.dao.mapper.CommodityMapper.selectByPrimaryKey"/>
+    </resultMap>
+    <select id="selectByUserId" resultMap="rm_all">
+        <include refid="select"/>
+        and user_id=#{userId}
+        order by o.create_time desc
+    </select>
 </mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.xyes.zkh.retail.repository.dao.mapper.GeneralTimeSlotMapper">
+    <sql id="select">
+        select sts.id                sts_id,
+               sts.time_range_id     sts_time_range_id,
+               sts.start_time        sts_start_time,
+               sts.end_time          sts_end_time,
+               sts.count_upper_limit sts_count_upper_limit,
+               sts.booked_count      sts_booked_count,
+               sts.create_time       sts_create_time,
+               sts.update_time       sts_update_time,
+               sts.deleted           sts_deleted
+        from t_special_time_slot as sts
+        where sts.deleted != 1
+    </sql>
+    <resultMap id="rm_base" type="club.xyes.zkh.retail.commons.entity.SpecialTimeSlot">
+        <id column="sts_id" property="id"/>
+        <result column="sts_time_range_id" property="timeRangeId"/>
+        <result column="sts_start_time" property="startTime"/>
+        <result column="sts_end_time" property="endTime"/>
+        <result column="sts_count_upper_limit" property="countUpperLimit"/>
+        <result column="sts_booked_count" property="bookedCount"/>
+        <result column="sts_create_time" property="createTime"/>
+        <result column="sts_update_time" property="updateTime"/>
+        <result column="sts_deleted" property="deleted"/>
+    </resultMap>
+</mapper>

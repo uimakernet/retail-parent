@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.xyes.zkh.retail.repository.dao.mapper.GeneralTimeRangeMapper">
+    <sql id="select">
+        select gts.id                gts_id,
+               gts.time_range_id     gts_time_range_id,
+               gts.start_time        gts_start_time,
+               gts.end_time          gts_end_time,
+               gts.count_upper_limit gts_count_upper_limit,
+               gts.booked_count      gts_booked_count,
+               gts.create_time       gts_create_time,
+               gts.update_time       gts_update_time,
+               gts.deleted           gts_deleted
+        from t_general_time_slot as gts
+        where gts.deleted != 1;
+    </sql>
+    <resultMap id="rm_base" type="club.xyes.zkh.retail.commons.entity.GeneralTimeSlot">
+        <id column="gtr_id" property="id"/>
+        <result column="time_range_id" property="timeRangeId"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="count_upper_limit" property="countUpperLimit"/>
+        <result column="booked_count" property="bookedCount"/>
+        <result column="gtr_create_time" property="createTime"/>
+        <result column="gtr_update_time" property="updateTime"/>
+        <result column="gtr_deleted" property="deleted"/>
+    </resultMap>
+</mapper>

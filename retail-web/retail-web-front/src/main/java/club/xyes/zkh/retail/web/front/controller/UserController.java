@@ -47,4 +47,15 @@ public class UserController extends AbstractEntityController<User> {
         @NotNull User user = userService.require(userId);
         return GeneralResult.ok(user);
     }
+
+    /**
+     * 当前登录的用户信息
+     *
+     * @return GR
+     */
+    @GetMapping("/mine")
+    public GeneralResult<User> currentUser() {
+        User user = requireCurrentUser(userService);
+        return GeneralResult.ok(user);
+    }
 }

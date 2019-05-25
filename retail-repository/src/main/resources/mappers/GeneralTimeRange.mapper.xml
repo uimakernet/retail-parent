@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.xyes.zkh.retail.repository.dao.mapper.GeneralTimeSlotMapper">
+    <sql id="select">
+        select gtr.id           gtr_id,
+               gtr.commodity_id gtr_commodity_id,
+               gtr.day_of_week  gtr_day_of_week,
+               gtr.update_time  gtr_update_time,
+               gtr.create_time  gtr_create_time,
+               gtr.deleted      gtr_deleted
+        from t_general_time_range as gtr
+        where gtr.deleted != 1
+    </sql>
+    <resultMap id="rm_base" type="club.xyes.zkh.retail.commons.entity.GeneralTimeRange">
+        <id column="gtr_id" property="id"/>
+        <result column="gtr_commodity_id" property="commodity"/>
+        <result column="gtr_day_of_week" property="dayOfWeek"/>
+        <result column="gtr_create_time" property="createTime"/>
+        <result column="gtr_update_time" property="updateTime"/>
+        <result column="gtr_deleted" property="deleted"/>
+    </resultMap>
+</mapper>

@@ -64,7 +64,7 @@ public class WxUserController extends AbstractController {
      * @param response 响应对象
      */
     private void setLoginCookie(User user, HttpServletResponse response) {
-        UserLoginCookie cookie = new UserLoginCookie(user);
-        String value = accessTokenEncoder.encode(cookie.toJSON(), UserLoginCookie.TOKEN_PREFIX);
+        UserLoginCookie cookie = new UserLoginCookie(user, accessTokenEncoder);
+        cookie.write2Response(response);
     }
 }

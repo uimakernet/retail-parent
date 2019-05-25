@@ -25,4 +25,26 @@
         from t_user as u
         where u.deleted != 1
     </sql>
+    <resultMap id="rm_base" type="club.xyes.zkh.retail.commons.entity.User">
+        <id column="id" property="id"/>
+        <result column="nickname" property="nickname"/>
+        <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="wx_open_id" property="wxOpenId"/>
+        <result column="wx_avatar" property="wxAvatar"/>
+        <result column="role" property="role"/>
+        <result column="position_longitude" property="positionLongitude"/>
+        <result column="position_latitude" property="positionLatitude"/>
+        <result column="position" property="position"/>
+        <result column="direct_income" property="directIncome"/>
+        <result column="team_income" property="teamIncome"/>
+        <result column="withdrawals" property="withdrawals"/>
+        <result column="promo_code" property="promoCode"/>
+        <result column="team_header_level" property="teamHeaderLevel"/>
+        <result column="leader_id" property="leaderId"/>
+        <result column="wx_token_json" property="wxTokenJson"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
 </mapper>

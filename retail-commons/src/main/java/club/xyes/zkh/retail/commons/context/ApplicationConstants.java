@@ -83,5 +83,17 @@ public class ApplicationConstants {
          * 内容类型 JSON 编码 UTF-8
          */
         public static final String CONTENT_TYPE_JSON_UTF8 = "application/json;charset=utf-8";
+        /**
+         * API路径
+         */
+        public static final String API_BASE_PATH = "/api/**";
+        /**
+         * 开放授权Api地址
+         */
+        public static final String WITHOUT_AUTH_PATH = "/api/open/**";
+        /**
+         * 用户附加参数名称
+         */
+        public static final String USER_TOKEN_EXTEND_PARAM_NAME = "userToken";
     }
 }

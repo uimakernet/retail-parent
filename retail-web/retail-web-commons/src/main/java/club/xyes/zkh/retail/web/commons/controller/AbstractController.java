@@ -1,5 +1,10 @@
 package club.xyes.zkh.retail.web.commons.controller;
 
+import club.xyes.zkh.retail.commons.context.ApplicationConstants;
+import club.xyes.zkh.retail.commons.exception.PermissionDeniedException;
+import club.xyes.zkh.retail.commons.holder.RequestExtendParamHolder;
+import club.xyes.zkh.retail.web.commons.vo.UserLoginCookie;
+
 import javax.validation.constraints.NotNull;
 
 /**
@@ -27,7 +32,7 @@ public abstract class AbstractController {
      * @return 页码
      */
     @NotNull
-    public int defaultPage(Integer page) {
+    protected int defaultPage(Integer page) {
         return page == null ? DEFAULT_PAGE : page;
     }
 
@@ -38,7 +43,38 @@ public abstract class AbstractController {
      * @return 每页大小
      */
     @NotNull
-    public int defaultRows(Integer rows) {
+    protected int defaultRows(Integer rows) {
         return rows == null ? DEFAULT_ROWS : rows;
+    }
+
+    /**
+     * 获取当前用户登录Cookie
+     *
+     * @return 用户登录Cookie
+     */
+    UserLoginCookie getUserLoginCookie() {
+        return RequestExtendParamHolder.get(ApplicationConstants.Http.USER_TOKEN_EXTEND_PARAM_NAME, UserLoginCookie.class);
+    }
+
+    /**
+     * 获取用户登录Cookie 若为空则抛出异常
+     *
+     * @return UserLoginCookie
+     */
+    UserLoginCookie requireUserLoginCookie() {
+        UserLoginCookie userLoginCookie = getUserLoginCookie();
+        if (userLoginCookie == null) {
+            throw new PermissionDeniedException("当前未登录任何用户");
+        }
+        return userLoginCookie;
+    }
+
+    /**
+     * 获取用户基本信息 若不存在 则抛出异常
+     *
+     * @return 用户基本信息
+     */
+    public UserLoginCookie.UserInfo requireUserInfo() {
+        return requireUserLoginCookie().getUserInfo();
     }
 }
