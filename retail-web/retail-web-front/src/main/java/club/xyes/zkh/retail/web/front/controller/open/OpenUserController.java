@@ -65,4 +65,15 @@ public class OpenUserController extends AbstractEntityController<User> {
         cookie.write2Response(response);
         return GeneralResult.ok(cookie);
     }
+
+    /**
+     * 获取当前登录的用户信息
+     *
+     * @return GR with 用户信息
+     */
+    @GetMapping("/me")
+    public GeneralResult<User> me() {
+        User user = requireCurrentUser(userService);
+        return GeneralResult.ok(user);
+    }
 }

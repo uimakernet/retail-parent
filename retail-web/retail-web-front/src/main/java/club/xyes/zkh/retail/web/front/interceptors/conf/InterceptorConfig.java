@@ -7,6 +7,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @data 2019/5/20 0020
  */
 @Configuration
+@Component
 public class InterceptorConfig implements WebMvcConfigurer, ApplicationContextAware {
     private final ApiInterceptor apiInterceptor;
     private ApplicationContext applicationContext;

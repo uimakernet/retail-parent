@@ -22,4 +22,23 @@ public interface OrderService extends AbstractService<Order> {
      * @return PageInfo with Orders
      */
     PageInfo<Order> findByUserId(Integer userId, Integer page, Integer rows);
+
+    /**
+     * 根据用户ID和状态查询订单
+     *
+     * @param userId 用户ID
+     * @param status 状态
+     * @param page   页码
+     * @param rows   每页大小
+     * @return PageInfo with Order
+     */
+    PageInfo<Order> findByUserIdAndStatus(Integer userId, Integer status, Integer page, Integer rows);
+
+    /**
+     * 创建新的订单
+     *
+     * @param order 订单
+     * @return 创建结果订单
+     */
+    Order create(Order order);
 }

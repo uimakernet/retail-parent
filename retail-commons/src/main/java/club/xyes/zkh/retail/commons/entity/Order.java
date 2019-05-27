@@ -20,6 +20,26 @@ import java.util.Date;
 @Table(name = "t_order")
 public class Order extends AbstractEntity {
     /**
+     * 状态 创建
+     */
+    public static final int STATUS_CREATE = 0x00;
+    /**
+     * 已支付 无需预约
+     */
+    public static final int STATUS_PAID = 0x01;
+    /**
+     * 已支付 需要预约
+     */
+    public static final int STATUS_NEED_BOOKED = 0x02;
+    /**
+     * 已预约
+     */
+    public static final int STATUS_BOOKED = 0x03;
+    /**
+     * 已完成 已核销
+     */
+    public static final int STATUS_COMPLETE = 0x04;
+    /**
      * 用户ID
      */
     @Column(name = "user_id", length = 10, nullable = false)

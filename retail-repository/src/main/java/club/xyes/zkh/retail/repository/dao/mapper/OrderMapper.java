@@ -24,4 +24,14 @@ public interface OrderMapper extends AbstractMapper<Order> {
      * @return Order List
      */
     List<Order> selectByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 通过用户ID】和状态查询订单
+     *
+     * @param userId 用户ID
+     * @param status 状态
+     * @return OrderList
+     */
+    List<Order> selectByUserIdAndStatus(@Param("userId") Integer userId,
+                                        @Param("status") Integer status);
 }

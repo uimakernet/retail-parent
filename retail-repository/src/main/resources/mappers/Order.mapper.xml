@@ -52,6 +52,13 @@
     <select id="selectByUserId" resultMap="rm_all">
         <include refid="select"/>
         and user_id=#{userId}
+        and o.status!=0
+        order by o.create_time desc
+    </select>
+    <select id="selectByUserIdAndStatus" resultMap="rm_all">
+        <include refid="select"/>
+        and o.user_id=#{userId}
+        and o.status=#{status}
         order by o.create_time desc
     </select>
 </mapper>

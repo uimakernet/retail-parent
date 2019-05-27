@@ -13,7 +13,7 @@
     </sql>
     <resultMap id="rm_base" type="club.xyes.zkh.retail.commons.entity.GeneralTimeRange">
         <id column="gtr_id" property="id"/>
-        <result column="gtr_commodity_id" property="commodity"/>
+        <result column="gtr_commodity_id" property="commodityId"/>
         <result column="gtr_day_of_week" property="dayOfWeek"/>
         <result column="gtr_create_time" property="createTime"/>
         <result column="gtr_update_time" property="updateTime"/>

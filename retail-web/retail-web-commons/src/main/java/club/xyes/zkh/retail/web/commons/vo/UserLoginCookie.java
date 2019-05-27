@@ -46,7 +46,9 @@ public class UserLoginCookie extends Cookie {
             return null;
         }
         Optional<Cookie> cookie = Arrays.stream(cookies).filter(c -> Objects.equals(c.getName(), COOKIE_NAME)).reduce((v, ignore) -> v);
-        return cookie.map(value -> readFromCookie(value, encoder)).orElse(null);
+        UserLoginCookie userLoginCookie = cookie.map(value -> readFromCookie(value, encoder)).orElse(null);
+        log.debug("Interceptor cookie[userToken] = [{}]", userLoginCookie);
+        return userLoginCookie;
     }
 
     /**
@@ -59,8 +61,13 @@ public class UserLoginCookie extends Cookie {
     public static UserLoginCookie readFromCookie(Cookie cookie, AccessTokenEncoder encoder) {
         String cookieValue = cookie.getValue();
         String token = cookieValue.substring(TOKEN_PREFIX.length());
-        UserInfo userInfo = encoder.decode(token, UserInfo.class);
-        return new UserLoginCookie(userInfo);
+        try {
+            UserInfo userInfo = encoder.decode(token, UserInfo.class);
+            return new UserLoginCookie(userInfo);
+        } catch (Exception e) {
+            log.debug("Could not unpack token:[{}]", token);
+            return null;
+        }
     }
 
     /**

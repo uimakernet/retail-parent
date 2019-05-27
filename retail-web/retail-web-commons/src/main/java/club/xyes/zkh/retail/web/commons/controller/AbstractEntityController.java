@@ -5,6 +5,8 @@ import club.xyes.zkh.retail.commons.entity.User;
 import club.xyes.zkh.retail.service.basic.AbstractService;
 import club.xyes.zkh.retail.service.general.UserService;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Create by 郭文梁 2019/5/18 0018 12:39
  * AbstractEntityController
@@ -37,6 +39,7 @@ public abstract class AbstractEntityController<Entity extends AbstractEntity> ex
      * @param userService 用户业务组件
      * @return 用户信息
      */
+    @NotNull
     protected User requireCurrentUser(UserService userService) {
         return userService.require(requireUserLoginCookie().getUserInfo().getUserId());
     }

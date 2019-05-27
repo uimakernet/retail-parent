@@ -35,8 +35,7 @@ public class AccessTokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String path = request.getRequestURI();
-        if (pathMatcher.match(ApplicationConstants.Http.API_BASE_PATH, path)
-                && !pathMatcher.match(ApplicationConstants.Http.WITHOUT_AUTH_PATH, path)) {
+        if (pathMatcher.match(ApplicationConstants.Http.API_BASE_PATH, path)) {
             return doIntercept(request, response);
         } else {
             return true;
@@ -55,7 +54,7 @@ public class AccessTokenInterceptor implements HandlerInterceptor {
         if (cookie == null) {
             response.setContentType(ApplicationConstants.Http.CONTENT_TYPE_JSON_UTF8);
             response.getWriter().write(JSON.toJSONString(GeneralResult.permissionDenied("未登录")));
-            return false;
+            return pathMatcher.match(ApplicationConstants.Http.WITHOUT_AUTH_PATH, request.getRequestURI());
         }
         RequestExtendParamHolder.set(ApplicationConstants.Http.USER_TOKEN_EXTEND_PARAM_NAME, cookie);
         return true;

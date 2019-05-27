@@ -6,6 +6,9 @@ spring:
   output:
     ansi:
       enabled: always
+site:
+  staticServer: http://zkh-cdn.xyes.club/retail
+  staticFilePath: /www/wwwroot/static/retail
 logging:
   level:
     club.xyes.zkh.retail: debug

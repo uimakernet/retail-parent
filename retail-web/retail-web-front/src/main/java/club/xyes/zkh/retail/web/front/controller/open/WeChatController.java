@@ -1,13 +1,16 @@
-package club.xyes.zkh.retail.web.front.controller;
+package club.xyes.zkh.retail.web.front.controller.open;
 
+import club.xyes.zkh.retail.commons.exception.BadRequestException;
+import club.xyes.zkh.retail.commons.utils.TextUtils;
 import club.xyes.zkh.retail.commons.vo.GeneralResult;
 import club.xyes.zkh.retail.web.commons.controller.AbstractController;
+import club.xyes.zkh.retail.web.front.vo.WxJsApiParamVo;
 import club.xyes.zkh.retail.wechat.api.Wechat;
 import club.xyes.zkh.retail.wechat.dto.WxJsApiConfigParam;
 import club.xyes.zkh.retail.wechat.props.WechatConfig;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @data 2019/5/18 0018
  */
 @RestController
-@RequestMapping("/api/wx")
+@RequestMapping("/api/open/wx")
 public class WeChatController extends AbstractController {
     private final Wechat wechat;
     private final WechatConfig wechatConfig;
@@ -32,14 +35,18 @@ public class WeChatController extends AbstractController {
     /**
      * 获取微信JsApi配置参数
      *
-     * @param url 地址
+     * @param paramVo {url: 'xxx'}
      * @return GR
      */
-    @GetMapping("/jsapi-config")
-    public GeneralResult<WxJsApiConfigParam> configParam(@RequestParam("url") String url) {
+    @PostMapping("/jsapi-config")
+    public GeneralResult<WxJsApiConfigParam> configParam(@RequestBody WxJsApiParamVo paramVo) {
+        if (paramVo == null) {
+            throw new BadRequestException("参数未传");
+        }
+        TextUtils.notEmpty(paramVo::getUrl, "授权地址必填");
         String appId = wechatConfig.getAppId();
         String secret = wechatConfig.getSecret();
-        WxJsApiConfigParam config = wechat.getJsApiConfigParam(appId, secret, url);
+        WxJsApiConfigParam config = wechat.getJsApiConfigParam(appId, secret, paramVo.getUrl());
         return GeneralResult.ok(config);
     }
 }
