@@ -94,9 +94,8 @@ public interface AbstractService<Entity extends AbstractEntity> {
      * 通过ID删除对象
      *
      * @param id ID
-     * @return 是否删除成功
      */
-    boolean deleteById(Integer id);
+    void deleteById(Integer id);
 
     /**
      * 获取总数量

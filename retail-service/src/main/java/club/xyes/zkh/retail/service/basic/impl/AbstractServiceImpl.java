@@ -127,13 +127,15 @@ public abstract class AbstractServiceImpl<Entity extends AbstractEntity> impleme
     }
 
     @Override
-    public boolean deleteById(Integer id) {
-        int col = mapper.deleteByPrimaryKey(id);
+    public void deleteById(Integer id) {
+        int rows = mapper.deleteByPrimaryKey(id);
         log.debug("Delete {} where id={}", entityClass, id);
-        if (col > 1) {
-            throw new InternalServerErrorException("Delete Error: result is " + col);
+        if (rows > 1) {
+            throw new InternalServerErrorException("Delete Error: result is " + rows);
         }
-        return col == 1;
+        if (rows != 1) {
+            throw new InternalServerErrorException("Error on delete [" + entityClass + "], result rows is " + rows);
+        }
     }
 
     @Override
