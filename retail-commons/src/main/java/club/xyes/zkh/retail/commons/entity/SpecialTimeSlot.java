@@ -25,6 +25,10 @@ public class SpecialTimeSlot extends AbstractEntity {
     @Column(name = "time_range_id", length = 10, nullable = false)
     private Integer timeRangeId;
     /**
+     * 关联的时间区间对象
+     */
+    private SpecialTimeRange specialTimeRange;
+    /**
      * 开始时间
      */
     @Column(name = "start_time", nullable = false)

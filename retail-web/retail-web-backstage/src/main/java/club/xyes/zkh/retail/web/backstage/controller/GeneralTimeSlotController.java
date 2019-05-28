@@ -1,9 +1,11 @@
 package club.xyes.zkh.retail.web.backstage.controller;
 
+import club.xyes.zkh.retail.commons.entity.GeneralTimeRange;
 import club.xyes.zkh.retail.commons.entity.GeneralTimeSlot;
 import club.xyes.zkh.retail.commons.exception.BadRequestException;
 import club.xyes.zkh.retail.commons.utils.ParamChecker;
 import club.xyes.zkh.retail.commons.vo.GeneralResult;
+import club.xyes.zkh.retail.service.general.GeneralTimeRangeService;
 import club.xyes.zkh.retail.service.general.GeneralTimeSlotService;
 import club.xyes.zkh.retail.web.commons.controller.AbstractEntityController;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +24,18 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/api/general-time-slot")
 public class GeneralTimeSlotController extends AbstractEntityController<GeneralTimeSlot> {
     private final GeneralTimeSlotService generalTimeSlotService;
+    private final GeneralTimeRangeService generalTimeRangeService;
 
     /**
      * 构造时指定业务组件
      *
      * @param service 业务组件
      */
-    protected GeneralTimeSlotController(GeneralTimeSlotService service) {
+    protected GeneralTimeSlotController(GeneralTimeSlotService service,
+                                        GeneralTimeRangeService generalTimeRangeService) {
         super(service);
         this.generalTimeSlotService = service;
+        this.generalTimeRangeService = generalTimeRangeService;
     }
 
     /**
@@ -57,18 +62,37 @@ public class GeneralTimeSlotController extends AbstractEntityController<GeneralT
     public GeneralResult<GeneralTimeSlot> update(@PathVariable("id") Integer id,
                                                  @RequestBody GeneralTimeSlot param) {
         @NotNull GeneralTimeSlot timeSlot = generalTimeSlotService.require(id);
-        checkAndCopyUpdateParams(param, timeSlot);
+        checkAndCopyParams(param, timeSlot);
         GeneralTimeSlot res = generalTimeSlotService.updateById(timeSlot);
         return GeneralResult.ok(res);
     }
 
     /**
-     * 检查更新参数并且将参数拷贝到目标对象中
+     * 创建信息时间段
+     *
+     * @param generalTimeRangeId 时间区间ID
+     * @param param              参数
+     * @return GR
+     */
+    @PostMapping("/range/{generalTimeRangeId}")
+    public GeneralResult<GeneralTimeSlot> create(@PathVariable("generalTimeRangeId") Integer generalTimeRangeId,
+                                                 @RequestBody GeneralTimeSlot param) {
+        GeneralTimeSlot target = new GeneralTimeSlot();
+        checkAndCopyParams(param, target);
+        @NotNull GeneralTimeRange timeRange = generalTimeRangeService.require(generalTimeRangeId);
+        target.setGeneralTimeRange(timeRange);
+        target.setTimeRangeId(generalTimeRangeId);
+        GeneralTimeSlot res = generalTimeSlotService.save(target);
+        return GeneralResult.ok(res);
+    }
+
+    /**
+     * 检查参数并且将参数拷贝到目标对象中
      *
      * @param param  更新参数
      * @param target 目标对象
      */
-    private void checkAndCopyUpdateParams(GeneralTimeSlot param, GeneralTimeSlot target) {
+    private void checkAndCopyParams(GeneralTimeSlot param, GeneralTimeSlot target) {
         Class<? extends RuntimeException> exceptionClass = BadRequestException.class;
         ParamChecker.notNull(param, exceptionClass, "参数未传");
         ParamChecker.notNull(param.getStartTime(), exceptionClass, "开始时间未传");
@@ -78,5 +102,4 @@ public class GeneralTimeSlotController extends AbstractEntityController<GeneralT
         target.setEndTime(param.getEndTime());
         target.setCountUpperLimit(param.getCountUpperLimit());
     }
-
 }

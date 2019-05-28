@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Column;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Create by 郭文梁 2019/5/18 0018 09:59
@@ -33,4 +34,8 @@ public class SpecialTimeRange extends AbstractEntity {
      */
     @Column(name = "action_date", nullable = false)
     private Date actionDate;
+    /**
+     * 预约时间段列表
+     */
+    private List<SpecialTimeSlot> slots;
 }

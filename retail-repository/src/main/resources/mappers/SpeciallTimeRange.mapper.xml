@@ -9,7 +9,28 @@
                str.update_time  str_update_time,
                str.deleted      str_deleted
         from t_special_time_range as str
-        where str.deleted != 1;
+        where str.deleted != 1
+    </sql>
+    <sql id="selectWithTimeRange">
+        select str.id                str_id,
+               str.commodity_id      str_commodity_id,
+               str.action_date       str_action_date,
+               str.create_time       str_create_time,
+               str.update_time       str_update_time,
+               str.deleted           str_deleted,
+               sts.id                sts_id,
+               sts.time_range_id     sts_time_range_id,
+               sts.start_time        sts_start_time,
+               sts.end_time          sts_end_time,
+               sts.count_upper_limit sts_count_upper_limit,
+               sts.booked_count      sts_booked_count,
+               sts.create_time       sts_create_time,
+               sts.update_time       sts_update_time,
+               sts.deleted           sts_deleted
+        from t_special_time_slot as sts
+                 left outer join t_special_time_range as str on sts.time_range_id = str.id
+        where sts.deleted != 1
+          and str.deleted != 1
     </sql>
     <resultMap id="rm_base" type="club.xyes.zkh.retail.commons.entity.SpecialTimeRange">
         <id column="str_id" property="id"/>
@@ -19,4 +40,14 @@
         <result column="str_update_time" property="updateTime"/>
         <result column="str_deleted" property="deleted"/>
     </resultMap>
+    <resultMap id="rmWithRange" type="club.xyes.zkh.retail.commons.entity.SpecialTimeSlot"
+               extends="club.xyes.zkh.retail.repository.dao.mapper.SpecialTimeSlotMapper.rm_base">
+        <association property="specialTimeRange"
+                     resultMap="rm_base"/>
+    </resultMap>
+    <select id="selectByCommodityIdFetchRange"
+            resultMap="rmWithRange">
+        <include refid="selectWithTimeRange"/>
+        and str.commodity_id=#{commodityId}
+    </select>
 </mapper>
