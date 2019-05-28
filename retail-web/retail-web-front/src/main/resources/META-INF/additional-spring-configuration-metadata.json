@@ -19,6 +19,36 @@
       "name": "site.staticFilePath",
       "type": "java.lang.String",
       "description": "静态资源保存根目录."
+    },
+    {
+      "name": "saobei.baseUrl",
+      "type": "java.lang.String",
+      "description": "api基础路径."
+    },
+    {
+      "name": "saobei.appId",
+      "type": "java.lang.String",
+      "description": "公众号APPID."
+    },
+    {
+      "name": "saobei.merchantNo",
+      "type": "java.lang.String",
+      "description": "商户号."
+    },
+    {
+      "name": "saobei.terminalId",
+      "type": "java.lang.String",
+      "description": "终端号."
+    },
+    {
+      "name": "saobei.notifyUrl",
+      "type": "java.lang.String",
+      "description": "支付结果通知地址."
+    },
+    {
+      "name": "saobei.token",
+      "type": "java.lang.String",
+      "description": "接口令牌."
     }
   ]
 }

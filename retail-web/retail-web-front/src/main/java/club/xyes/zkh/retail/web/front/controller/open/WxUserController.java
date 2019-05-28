@@ -1,4 +1,4 @@
-package club.xyes.zkh.retail.web.front.controller;
+package club.xyes.zkh.retail.web.front.controller.open;
 
 import club.xyes.zkh.retail.commons.entity.User;
 import club.xyes.zkh.retail.service.encrypt.AccessTokenEncoder;

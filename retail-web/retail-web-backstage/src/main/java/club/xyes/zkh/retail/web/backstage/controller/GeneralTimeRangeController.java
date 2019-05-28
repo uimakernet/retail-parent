@@ -1,4 +1,4 @@
-package club.xyes.zkh.retail.web.front.controller;
+package club.xyes.zkh.retail.web.backstage.controller;
 
 import club.xyes.zkh.retail.commons.entity.GeneralTimeRange;
 import club.xyes.zkh.retail.commons.vo.GeneralResult;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Create by 郭文梁 2019/5/25 0025 10:59
+ * Create by 郭文梁 2019/5/28 0028 17:36
  * GeneralTimeRangeController
- * 普通时间区间相关数据访问控制器
+ * 通用时间区间相关数据访问控制器
  *
  * @author 郭文梁
- * @data 2019/5/25 0025
+ * @data 2019/5/28 0028
  */
 @RestController
 @RequestMapping("/api/general-time-range")

@@ -1,4 +1,4 @@
-package club.xyes.zkh.retail.web.front.config;
+package club.xyes.zkh.retail.web.commons.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @ConfigurationProperties(prefix = "site")
-//@Component
+@Component
 public class StaticConfigProp {
     /**
      * 静态资源服务器地址

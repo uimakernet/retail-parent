@@ -1,4 +1,4 @@
-package club.xyes.zkh.retail.web.front.controller;
+package club.xyes.zkh.retail.web.backstage.controller;
 
 import club.xyes.zkh.retail.commons.entity.Commodity;
 import club.xyes.zkh.retail.commons.vo.GeneralResult;

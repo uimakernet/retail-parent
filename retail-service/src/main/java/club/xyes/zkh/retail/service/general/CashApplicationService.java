@@ -20,5 +20,17 @@ public interface CashApplicationService extends AbstractService<CashApplication>
      * @param amount 提现金额
      * @return 提现申请对象
      */
-    CashApplication create(User user, Integer amount);
+    CashApplication create(User user, Integer amount, OnApplicationCreateSuccessListsner listsner);
+
+    /**
+     * 提现申请创建成功监听
+     */
+    interface OnApplicationCreateSuccessListsner {
+        /**
+         * 提现申请创建成功监听
+         *
+         * @param application 申请对象
+         */
+        void onApplicationCreateSuccess(CashApplication application);
+    }
 }

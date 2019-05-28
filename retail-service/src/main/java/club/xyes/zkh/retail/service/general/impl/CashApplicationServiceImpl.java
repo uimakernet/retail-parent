@@ -9,6 +9,7 @@ import club.xyes.zkh.retail.service.basic.impl.AbstractServiceImpl;
 import club.xyes.zkh.retail.service.general.CashApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Create by 郭文梁 2019/5/25 0025 10:50
@@ -29,7 +30,8 @@ public class CashApplicationServiceImpl extends AbstractServiceImpl<CashApplicat
     }
 
     @Override
-    public CashApplication create(User user, Integer amount) {
+    @Transactional(rollbackFor = Exception.class)
+    public CashApplication create(User user, Integer amount, OnApplicationCreateSuccessListsner listsner) {
         int withdrawableAmount = WithdrawUtils.getWithdrawableAmount(user);
         if (amount > withdrawableAmount) {
             throw new BadRequestException("输入金额必须小于可提现金额");
@@ -39,6 +41,10 @@ public class CashApplicationServiceImpl extends AbstractServiceImpl<CashApplicat
         application.setUserId(user.getId());
         application.setAmount(amount);
         application.setStatus(CashApplication.STATUS_CREATE);
-        return save(application);
+        CashApplication saveResult = save(application);
+        if (listsner != null) {
+            listsner.onApplicationCreateSuccess(saveResult);
+        }
+        return saveResult;
     }
 }

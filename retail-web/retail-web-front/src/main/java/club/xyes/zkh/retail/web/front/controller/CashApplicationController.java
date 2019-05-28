@@ -8,6 +8,7 @@ import club.xyes.zkh.retail.service.general.CashApplicationService;
 import club.xyes.zkh.retail.service.general.UserService;
 import club.xyes.zkh.retail.web.commons.controller.AbstractEntityController;
 import club.xyes.zkh.retail.web.front.vo.WithdrawVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/cash")
+@Slf4j
 public class CashApplicationController extends AbstractEntityController<CashApplication> {
     private final CashApplicationService cashApplicationService;
     private final UserService userService;
@@ -39,13 +41,19 @@ public class CashApplicationController extends AbstractEntityController<CashAppl
         this.userService = userService;
     }
 
+    /**
+     * 发起提现申请
+     *
+     * @param param 参数
+     * @return GR
+     */
     @PostMapping("/create")
     public GeneralResult<CashApplication> create(@RequestBody WithdrawVo param) {
         if (param == null || param.getAmount() == null) {
             throw new BadRequestException("参数未传");
         }
         User user = requireCurrentUser(userService);
-        CashApplication res = cashApplicationService.create(user, param.getAmount());
+        CashApplication res = cashApplicationService.create(user, param.getAmount(), application -> log.debug("CashApplication create success:{}", application));
         return GeneralResult.ok(res);
     }
 }

@@ -12,17 +12,53 @@
                gts.update_time       gts_update_time,
                gts.deleted           gts_deleted
         from t_general_time_slot as gts
-        where gts.deleted != 1;
+        where gts.deleted != 1
+    </sql>
+    <sql id="selectWithTimeRange">
+        select gts.id                gts_id,
+               gts.time_range_id     gts_time_range_id,
+               gts.start_time        gts_start_time,
+               gts.end_time          gts_end_time,
+               gts.count_upper_limit gts_count_upper_limit,
+               gts.booked_count      gts_booked_count,
+               gts.create_time       gts_create_time,
+               gts.update_time       gts_update_time,
+               gts.deleted           gts_deleted,
+               gtr.id                gtr_id,
+               gtr.commodity_id      gtr_commodity_id,
+               gtr.day_of_week       gtr_day_of_week,
+               gtr.update_time       gtr_update_time,
+               gtr.create_time       gtr_create_time,
+               gtr.deleted           gtr_deleted
+        from t_general_time_slot as gts
+                 left outer join t_general_time_range gtr on gts.time_range_id = gtr.id
+        where gts.deleted != 1
+          and gtr.deleted != 1
     </sql>
     <resultMap id="rm_base" type="club.xyes.zkh.retail.commons.entity.GeneralTimeSlot">
-        <id column="gtr_id" property="id"/>
-        <result column="time_range_id" property="timeRangeId"/>
-        <result column="start_time" property="startTime"/>
-        <result column="end_time" property="endTime"/>
-        <result column="count_upper_limit" property="countUpperLimit"/>
-        <result column="booked_count" property="bookedCount"/>
-        <result column="gtr_create_time" property="createTime"/>
-        <result column="gtr_update_time" property="updateTime"/>
-        <result column="gtr_deleted" property="deleted"/>
+        <id column="gts_id" property="id"/>
+        <result column="gts_time_range_id" property="timeRangeId"/>
+        <result column="gts_start_time" property="startTime"/>
+        <result column="gts_end_time" property="endTime"/>
+        <result column="gts_count_upper_limit" property="countUpperLimit"/>
+        <result column="gts_booked_count" property="bookedCount"/>
+        <result column="gts_create_time" property="createTime"/>
+        <result column="gts_update_time" property="updateTime"/>
+        <result column="gts_deleted" property="deleted"/>
     </resultMap>
+    <resultMap id="rmWithTimeRange" type="club.xyes.zkh.retail.commons.entity.GeneralTimeSlot"
+               extends="rm_base">
+        <association property="generalTimeRange" javaType="club.xyes.zkh.retail.commons.entity.GeneralTimeRange">
+            <id column="gtr_id" property="id"/>
+            <result column="gtr_commodity_id" property="commodityId"/>
+            <result column="gtr_day_of_week" property="dayOfWeek"/>
+            <result column="gtr_create_time" property="createTime"/>
+            <result column="gtr_update_time" property="updateTime"/>
+            <result column="gtr_deleted" property="deleted"/>
+        </association>
+    </resultMap>
+    <select id="selectByCommodityId" resultMap="rmWithTimeRange">
+        <include refid="selectWithTimeRange"/>
+        and gtr.commodity_id=#{commodityId}
+    </select>
 </mapper>

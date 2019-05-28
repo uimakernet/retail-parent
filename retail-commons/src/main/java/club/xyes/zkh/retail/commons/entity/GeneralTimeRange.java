@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+import java.util.List;
 
 /**
  * Create by 郭文梁 2019/5/18 0018 09:35
@@ -32,4 +33,8 @@ public class GeneralTimeRange extends AbstractEntity {
      */
     @Column(name = "day_of_week", length = 1, nullable = false)
     private Integer dayOfWeek;
+    /**
+     * 时间段列表
+     */
+    private List<GeneralTimeSlot> slots;
 }
