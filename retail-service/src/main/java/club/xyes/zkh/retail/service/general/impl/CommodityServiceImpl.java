@@ -41,4 +41,12 @@ public class CommodityServiceImpl extends AbstractServiceImpl<Commodity> impleme
         }
         return commodity;
     }
+
+    @Override
+    public Commodity create(Integer storeId, Commodity commodity) {
+        commodity.setStoreId(storeId);
+        commodity.setSaleCount(0);
+        commodity.setStatus(Commodity.STATUS_AVAILABLE);
+        return save(commodity);
+    }
 }

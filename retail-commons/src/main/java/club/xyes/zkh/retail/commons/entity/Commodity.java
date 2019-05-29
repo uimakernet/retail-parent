@@ -1,6 +1,7 @@
 package club.xyes.zkh.retail.commons.entity;
 
 import club.xyes.zkh.retail.commons.context.ApplicationConstants;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -40,7 +41,7 @@ public class Commodity extends AbstractEntity {
      */
     private Store store;
     /**
-     * 购买每人上线
+     * 每人购买上限
      */
     @Column(name = "buy_limit", length = 4)
     private Integer buyLimit;
@@ -112,10 +113,12 @@ public class Commodity extends AbstractEntity {
      * 预约开始时间
      */
     @Column(name = "appointment_start_time")
+    @JsonFormat(pattern = ApplicationConstants.DATE_TIME_FORMAT)
     private Date appointmentStartTime;
     /**
      * 预约结束时间
      */
+    @JsonFormat(pattern = ApplicationConstants.DATE_TIME_FORMAT)
     @Column(name = "appointment_end_time")
     private Date appointmentEndTime;
     /**

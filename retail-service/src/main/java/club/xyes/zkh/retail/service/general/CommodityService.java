@@ -19,4 +19,13 @@ public interface CommodityService extends AbstractService<Commodity> {
      * @return Commodity with all
      */
     Commodity requireFetchAll(Integer id);
+
+    /**
+     * 为商铺创建新的商品
+     *
+     * @param storeId   商铺ID
+     * @param commodity 商品参数
+     * @return GR
+     */
+    Commodity create(Integer storeId, Commodity commodity);
 }
