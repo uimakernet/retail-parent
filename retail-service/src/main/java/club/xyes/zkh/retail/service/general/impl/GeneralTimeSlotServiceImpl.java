@@ -24,4 +24,11 @@ public class GeneralTimeSlotServiceImpl extends AbstractServiceImpl<GeneralTimeS
         super(mapper);
         this.generalTimeSlotMapper = mapper;
     }
+
+    @Override
+    public int countByTimeRangeId(Integer timeRangeId) {
+        GeneralTimeSlot query = new GeneralTimeSlot();
+        query.setTimeRangeId(timeRangeId);
+        return count(query);
+    }
 }

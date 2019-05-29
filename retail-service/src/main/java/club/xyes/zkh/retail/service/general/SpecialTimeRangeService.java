@@ -30,4 +30,26 @@ public interface SpecialTimeRangeService extends AbstractService<SpecialTimeRang
      * @return GeneralTimeRange with GeneralTimeSlot list
      */
     List<SpecialTimeRange> findByCommodityIdCollectByTimeRange(Integer commodityId);
+
+    /**
+     * 创建新的特殊时间区间
+     *
+     * @param commodityId 商品ID
+     * @param target      创建参数
+     * @param listener    创建成功监听
+     * @return 创建结果
+     */
+    SpecialTimeRange create(Integer commodityId, SpecialTimeRange target, OnCreateListener listener);
+
+    /**
+     * 新特殊时间区间创建监听器
+     */
+    interface OnCreateListener {
+        /**
+         * 当新的区间创建时自动调用
+         *
+         * @param specialTimeRange 区间
+         */
+        void onSpecialTimeRangeCreate(SpecialTimeRange specialTimeRange);
+    }
 }

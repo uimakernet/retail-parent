@@ -175,4 +175,16 @@ public abstract class AbstractServiceImpl<Entity extends AbstractEntity> impleme
                 .filter(e -> updateById(e) != null)
                 .count();
     }
+
+    @Override
+    public boolean existsById(Integer id) {
+        return mapper.existsWithPrimaryKey(id);
+    }
+
+    @Override
+    public void requireExistsById(Integer id) {
+        if (!existsById(id)) {
+            throw new ResourceNotFoundException(entityClass, id);
+        }
+    }
 }

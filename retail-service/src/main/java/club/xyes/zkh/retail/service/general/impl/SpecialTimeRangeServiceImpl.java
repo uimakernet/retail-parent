@@ -7,6 +7,7 @@ import club.xyes.zkh.retail.service.basic.impl.AbstractServiceImpl;
 import club.xyes.zkh.retail.service.general.SpecialTimeRangeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,5 +52,16 @@ public class SpecialTimeRangeServiceImpl extends AbstractServiceImpl<SpecialTime
             slot.setSpecialTimeRange(null);
         });
         return new ArrayList<>(rangeMap.values());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public SpecialTimeRange create(Integer commodityId, SpecialTimeRange target, OnCreateListener listener) {
+        target.setCommodityId(commodityId);
+        SpecialTimeRange res = save(target);
+        if (listener != null) {
+            listener.onSpecialTimeRangeCreate(res);
+        }
+        return res;
     }
 }

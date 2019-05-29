@@ -143,4 +143,19 @@ public interface AbstractService<Entity extends AbstractEntity> {
      * @return 删除数量
      */
     int remove(Entity query);
+
+    /**
+     * 通过ID检查记录是否存在
+     *
+     * @param id ID
+     * @return 是否存在
+     */
+    boolean existsById(Integer id);
+
+    /**
+     * 检查指定ID的记录是否存在 不存在则抛出异常
+     *
+     * @param id ID
+     */
+    void requireExistsById(Integer id);
 }

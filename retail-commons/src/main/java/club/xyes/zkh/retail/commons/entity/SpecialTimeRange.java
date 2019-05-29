@@ -1,5 +1,7 @@
 package club.xyes.zkh.retail.commons.entity;
 
+import club.xyes.zkh.retail.commons.context.ApplicationConstants;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -33,6 +35,7 @@ public class SpecialTimeRange extends AbstractEntity {
      * 日期
      */
     @Column(name = "action_date", nullable = false)
+    @JsonFormat(pattern = ApplicationConstants.DATE_FORMAT)
     private Date actionDate;
     /**
      * 预约时间段列表

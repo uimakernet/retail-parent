@@ -47,6 +47,10 @@ public class GeneralTimeSlotController extends AbstractEntityController<GeneralT
     @DeleteMapping("/{id}")
     public GeneralResult<GeneralTimeSlot> delete(@PathVariable("id") Integer id) {
         @NotNull GeneralTimeSlot timeSlot = generalTimeSlotService.require(id);
+        int count = generalTimeSlotService.countByTimeRangeId(timeSlot.getTimeRangeId());
+        if (count <= 1) {
+            throw new BadRequestException("请至少保留一个时间段");
+        }
         generalTimeSlotService.deleteById(timeSlot.getId());
         return GeneralResult.ok(timeSlot);
     }

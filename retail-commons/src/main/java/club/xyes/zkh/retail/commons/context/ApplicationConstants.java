@@ -1,6 +1,7 @@
 package club.xyes.zkh.retail.commons.context;
 
 import java.time.ZoneId;
+import java.util.Locale;
 
 /**
  * Create by 郭文梁 2019/4/15 0015 15:03
@@ -15,6 +16,10 @@ public class ApplicationConstants {
      * 默认时区
      */
     public static final ZoneId DEFAULT_TIMEZONE = ZoneId.systemDefault();
+    /**
+     * 默认地区
+     */
+    public static final Locale DEFAULT_LOCALE = Locale.CHINA;
     /**
      * 系统默认编码
      */

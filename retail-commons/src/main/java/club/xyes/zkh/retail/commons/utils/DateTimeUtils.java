@@ -1,8 +1,10 @@
 package club.xyes.zkh.retail.commons.utils;
 
+import club.xyes.zkh.retail.commons.context.ApplicationConstants;
 import club.xyes.zkh.retail.commons.dto.DatetimeRange;
 import org.apache.commons.lang3.time.FastDateFormat;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,6 +17,7 @@ import java.util.Date;
  * @data 2019/4/17 0017
  */
 public class DateTimeUtils {
+
     /**
      * 获取日历对象
      *
@@ -104,6 +107,41 @@ public class DateTimeUtils {
         calendar.add(Calendar.DAY_OF_YEAR, daySize);
         Date end = calendar.getTime();
         return new DatetimeRange(start, end);
+    }
+
+    /**
+     * 解析时间日期字符串
+     *
+     * @param dateString 字符串
+     * @param style      格式
+     * @return date
+     */
+    public static Date parse(String dateString, String style) {
+        try {
+            return FastDateFormat.getInstance(style).parse(dateString);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    /**
+     * 解析日期字符串
+     *
+     * @param dateStr 字符串
+     * @return 日期对象
+     */
+    public static Date parseDate(String dateStr) {
+        return parse(dateStr, ApplicationConstants.DATE_FORMAT);
+    }
+
+    /**
+     * 解析时间字符串
+     *
+     * @param timeStr 字符串
+     * @return 日期对象
+     */
+    public static Date parseTime(String timeStr) {
+        return parse(timeStr, ApplicationConstants.TIME_FORMAT);
     }
 
     /**

@@ -12,4 +12,11 @@ import club.xyes.zkh.retail.service.basic.AbstractService;
  * @data 2019/5/25 0025
  */
 public interface GeneralTimeSlotService extends AbstractService<GeneralTimeSlot> {
+    /**
+     * 通过时间区间查询时间段数量
+     *
+     * @param timeRangeId 区间ID
+     * @return 时间段数量
+     */
+    int countByTimeRangeId(Integer timeRangeId);
 }
