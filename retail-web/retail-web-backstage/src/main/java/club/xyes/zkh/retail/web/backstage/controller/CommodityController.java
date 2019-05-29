@@ -171,4 +171,24 @@ public class CommodityController extends AbstractEntityController<Commodity> {
             target.setAppointmentEndTime(param.getAppointmentEndTime());
         }
     }
+
+    /**
+     * 查询某商家的商品
+     *
+     * @param storeId 商铺ID
+     * @param page    页码
+     * @param rows    每页大小
+     * @return GR with PageInfo
+     */
+    @GetMapping("/store/{storeId}")
+    public GeneralResult<PageInfo<Commodity>> findByStoreId(@PathVariable("storeId") Integer storeId,
+                                                            Integer page, Integer rows) {
+        Store store = storeService.require(storeId);
+        PageInfo<Commodity> commodityPageInfo = commodityService.findByStoreId(storeId, defaultPage(page), defaultRows(rows));
+        commodityPageInfo.setList(commodityPageInfo.getList()
+                .stream()
+                .peek(c -> c.setStore(store))
+                .collect(Collectors.toList()));
+        return GeneralResult.ok(commodityPageInfo);
+    }
 }

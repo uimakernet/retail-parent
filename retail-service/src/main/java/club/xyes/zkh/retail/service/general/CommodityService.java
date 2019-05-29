@@ -2,6 +2,7 @@ package club.xyes.zkh.retail.service.general;
 
 import club.xyes.zkh.retail.commons.entity.Commodity;
 import club.xyes.zkh.retail.service.basic.AbstractService;
+import com.github.pagehelper.PageInfo;
 
 /**
  * Create by 郭文梁 2019/5/20 0020 11:15
@@ -28,4 +29,14 @@ public interface CommodityService extends AbstractService<Commodity> {
      * @return GR
      */
     Commodity create(Integer storeId, Commodity commodity);
+
+    /**
+     * 通过商铺ID查询商品
+     *
+     * @param storeId 商铺ID
+     * @param page    页码
+     * @param rows    每页大小
+     * @return Commodity PageInfo
+     */
+    PageInfo<Commodity> findByStoreId(Integer storeId, int page, int rows);
 }

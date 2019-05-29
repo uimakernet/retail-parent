@@ -49,4 +49,13 @@ public class CommodityServiceImpl extends AbstractServiceImpl<Commodity> impleme
         commodity.setStatus(Commodity.STATUS_AVAILABLE);
         return save(commodity);
     }
+
+    @Override
+    public PageInfo<Commodity> findByStoreId(Integer storeId, int page, int rows) {
+        return PageHelper.startPage(page, rows, "create_time desc").doSelectPageInfo(() -> {
+            Commodity commodity = new Commodity();
+            commodity.setStoreId(storeId);
+            commodityMapper.select(commodity);
+        });
+    }
 }
