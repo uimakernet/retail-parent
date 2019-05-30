@@ -41,4 +41,25 @@ public interface OrderService extends AbstractService<Order> {
      * @return 创建结果订单
      */
     Order create(Order order);
+
+    /**
+     * 刷新订单状态
+     *
+     * @param id       订单ID
+     * @param listener 支付成功监听（回调）
+     * @return 订单信息
+     */
+    Order refreshStatus(Integer id, PaySuccessListener listener);
+
+    /**
+     * 支付成功监听器
+     */
+    interface PaySuccessListener {
+        /**
+         * 支付成功回调
+         *
+         * @param order 订单信息
+         */
+        void onPaySuccess(Order order);
+    }
 }

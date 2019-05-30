@@ -31,4 +31,11 @@ public class GeneralTimeSlotServiceImpl extends AbstractServiceImpl<GeneralTimeS
         query.setTimeRangeId(timeRangeId);
         return count(query);
     }
+
+    @Override
+    public GeneralTimeSlot create(Integer rangeId, GeneralTimeSlot slot) {
+        slot.setTimeRangeId(rangeId);
+        slot.setBookedCount(0);
+        return save(slot);
+    }
 }

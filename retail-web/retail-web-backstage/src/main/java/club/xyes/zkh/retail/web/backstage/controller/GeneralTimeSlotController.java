@@ -72,7 +72,7 @@ public class GeneralTimeSlotController extends AbstractEntityController<GeneralT
     }
 
     /**
-     * 创建信息时间段
+     * 创建普通时间段
      *
      * @param generalTimeRangeId 时间区间ID
      * @param param              参数
@@ -84,9 +84,8 @@ public class GeneralTimeSlotController extends AbstractEntityController<GeneralT
         GeneralTimeSlot target = new GeneralTimeSlot();
         checkAndCopyParams(param, target);
         @NotNull GeneralTimeRange timeRange = generalTimeRangeService.require(generalTimeRangeId);
+        GeneralTimeSlot res = generalTimeSlotService.create(generalTimeRangeId, target);
         target.setGeneralTimeRange(timeRange);
-        target.setTimeRangeId(generalTimeRangeId);
-        GeneralTimeSlot res = generalTimeSlotService.save(target);
         return GeneralResult.ok(res);
     }
 

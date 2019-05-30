@@ -1,7 +1,6 @@
 package club.xyes.zkh.retail.web.front.controller;
 
 import club.xyes.zkh.retail.commons.entity.GeneralTimeSlot;
-import club.xyes.zkh.retail.service.basic.AbstractService;
 import club.xyes.zkh.retail.service.general.GeneralTimeSlotService;
 import club.xyes.zkh.retail.web.commons.controller.AbstractEntityController;
 import org.springframework.web.bind.annotation.RequestMapping;

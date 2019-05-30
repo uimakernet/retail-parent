@@ -2,14 +2,19 @@ package club.xyes.zkh.retail.service.general.impl;
 
 import club.xyes.zkh.retail.commons.entity.Commodity;
 import club.xyes.zkh.retail.commons.entity.Order;
+import club.xyes.zkh.retail.commons.utils.OrderUtils;
 import club.xyes.zkh.retail.commons.utils.RandomUtils;
 import club.xyes.zkh.retail.repository.dao.mapper.OrderMapper;
 import club.xyes.zkh.retail.service.basic.impl.AbstractServiceImpl;
 import club.xyes.zkh.retail.service.general.OrderService;
+import club.xyes.zkh.retail.wechat.api.Wechat;
+import club.xyes.zkh.retail.wechat.dto.WxTradeInfo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Create by 郭文梁 2019/5/22 0022 16:53
@@ -23,10 +28,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class OrderServiceImpl extends AbstractServiceImpl<Order> implements OrderService {
     private final OrderMapper orderMapper;
+    private final Wechat wechat;
 
-    public OrderServiceImpl(OrderMapper mapper) {
+    public OrderServiceImpl(OrderMapper mapper,
+                            Wechat wechat) {
         super(mapper);
         this.orderMapper = mapper;
+        this.wechat = wechat;
     }
 
     @Override
@@ -46,6 +54,23 @@ public class OrderServiceImpl extends AbstractServiceImpl<Order> implements Orde
         calculatePrice(order);
         order.setStatus(Order.STATUS_CREATE);
         return save(order);
+    }
+
+    @Override
+    public Order refreshStatus(Integer id, PaySuccessListener listener) {
+        @NotNull Order order = require(id);
+        if (OrderUtils.isPaid(order)) {
+            //若已支付成功 不再执行后续流程
+            return order;
+        }
+        WxTradeInfo wxTradeInfo = wechat.queryTrade(order);
+        log.info("Query trade [{}] for order {}", wxTradeInfo, order);
+        if (wxTradeInfo.isPaid()) {
+            if (listener != null) {
+                listener.onPaySuccess(order);
+            }
+        }
+        return order;
     }
 
     /**

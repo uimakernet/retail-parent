@@ -47,4 +47,8 @@
         <result column="update_time" property="updateTime"/>
         <result column="deleted" property="deleted"/>
     </resultMap>
+    <select id="searchByNameOrNickName" resultMap="rm_base">
+        <include refid="select"/>
+        and (u.name like #{name} or u.nickname like #{name})
+    </select>
 </mapper>

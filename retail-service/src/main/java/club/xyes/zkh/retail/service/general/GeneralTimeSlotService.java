@@ -19,4 +19,13 @@ public interface GeneralTimeSlotService extends AbstractService<GeneralTimeSlot>
      * @return 时间段数量
      */
     int countByTimeRangeId(Integer timeRangeId);
+
+    /**
+     * 创建普通时间段
+     *
+     * @param rangeId 时间区间ID
+     * @param slot    时间段参数
+     * @return 创建结果
+     */
+    GeneralTimeSlot create(Integer rangeId, GeneralTimeSlot slot);
 }

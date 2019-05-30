@@ -16,6 +16,11 @@ import java.util.List;
  */
 public interface AbstractService<Entity extends AbstractEntity> {
     /**
+     * 搜索模板
+     */
+    String SEARCH_TEMPLATE = "%%%s%%";
+
+    /**
      * 根据ID查询实体对象
      * 可能为空
      *

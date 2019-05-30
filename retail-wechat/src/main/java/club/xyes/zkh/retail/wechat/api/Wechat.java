@@ -1,5 +1,6 @@
 package club.xyes.zkh.retail.wechat.api;
 
+import club.xyes.zkh.retail.commons.entity.Order;
 import club.xyes.zkh.retail.wechat.dto.*;
 
 /**
@@ -58,4 +59,12 @@ public interface Wechat {
      * @return 微信用户信息
      */
     WxUserInfo getUserInfo(String accessToken, String openId, String lang);
+
+    /**
+     * 查询交易状态
+     *
+     * @param order 订单
+     * @return 查询结果
+     */
+    WxTradeInfo queryTrade(Order order);
 }

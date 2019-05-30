@@ -1,6 +1,7 @@
 package club.xyes.zkh.retail.service.general.impl;
 
 import club.xyes.zkh.retail.commons.entity.User;
+import club.xyes.zkh.retail.commons.utils.RandomUtils;
 import club.xyes.zkh.retail.repository.dao.mapper.UserMapper;
 import club.xyes.zkh.retail.service.basic.impl.AbstractServiceImpl;
 import club.xyes.zkh.retail.service.general.UserService;
@@ -10,6 +11,8 @@ import club.xyes.zkh.retail.wechat.dto.WxUserInfo;
 import club.xyes.zkh.retail.wechat.props.WechatConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Create by 郭文梁 2019/5/18 0018 11:39
@@ -65,11 +68,51 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         return updateById(user);
     }
 
+    @Override
+    public User findByPromoCode(String promoCode) {
+        User query = new User();
+        query.setPromoCode(promoCode);
+        return findOneByQuery(query);
+    }
+
+    @Override
+    public User toPromoter(User user) {
+        String promoCode = randomPromoCode();
+        user.setRole(User.ROLE_PROMOTERS);
+        user.setPromoCode(promoCode);
+        return updateById(user);
+    }
+
+    @Override
+    public User toCaptain(User user) {
+        String promoCode = randomPromoCode();
+        user.setRole(User.ROLE_CAPTAIN);
+        //默认为初级小队长
+        user.setTeamHeaderLevel(User.LEVEL_PRIMARY);
+        user.setPromoCode(promoCode);
+        return updateById(user);
+    }
+
     private User createDefaultUser(WxOAuth2AccessToken token) {
         User user = new User();
         user.setWxOpenId(token.getOpenId());
         user.setWxTokenJson(token.getSourceJson());
         user.setRole(User.ROLE_USER);
         return user;
+    }
+
+    /**
+     * 生成随机推广码
+     *
+     * @return 推广码
+     */
+    private String randomPromoCode() {
+        return RandomUtils.randomPrettyUUIDString();
+    }
+
+    @Override
+    public List<User> searchByName(String name) {
+        String query = String.format(SEARCH_TEMPLATE, name);
+        return userMapper.searchByNameOrNickName(query);
     }
 }

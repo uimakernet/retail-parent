@@ -32,4 +32,8 @@ public class OrderCreateVo {
      * 购买数量
      */
     private Integer quantity;
+    /**
+     * 推广码
+     */
+    private String promoCode;
 }

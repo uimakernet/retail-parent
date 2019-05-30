@@ -4,6 +4,7 @@ import club.xyes.zkh.retail.commons.entity.Commodity;
 import club.xyes.zkh.retail.commons.entity.Order;
 import club.xyes.zkh.retail.commons.entity.User;
 import club.xyes.zkh.retail.commons.exception.BadRequestException;
+import club.xyes.zkh.retail.commons.utils.TextUtils;
 import club.xyes.zkh.retail.commons.vo.GeneralResult;
 import club.xyes.zkh.retail.service.general.CommodityService;
 import club.xyes.zkh.retail.service.general.OrderService;
@@ -31,6 +32,7 @@ public class OrderController extends AbstractEntityController<Order> {
     private final UserService userService;
     private final OrderService orderService;
     private final CommodityService commodityService;
+    private final OrderService.PaySuccessListener paySuccessListener;
 
     /**
      * 构造时指定业务组件
@@ -39,11 +41,13 @@ public class OrderController extends AbstractEntityController<Order> {
      */
     protected OrderController(OrderService service,
                               UserService userService,
-                              CommodityService commodityService) {
+                              CommodityService commodityService,
+                              OrderService.PaySuccessListener paySuccessListener) {
         super(service);
         this.orderService = service;
         this.userService = userService;
         this.commodityService = commodityService;
+        this.paySuccessListener = paySuccessListener;
     }
 
     /**
@@ -119,6 +123,29 @@ public class OrderController extends AbstractEntityController<Order> {
         order.setPhone(param.getPhone());
         //商铺ID 冗余存储
         order.setStoreId(commodity.getStoreId());
+
+        //处理推广关系
+        if (!TextUtils.isTrimedEmpty(param.getPromoCode())) {
+            //推广码存在
+            User promoter = userService.findByPromoCode(param.getPromoCode());
+            if (promoter != null) {
+                //推广用户存在
+                order.setPromoter(promoter);
+                order.setPromoterId(promoter.getId());
+            }
+        }
         return order;
+    }
+
+    /**
+     * 查看（刷新）订单状态
+     *
+     * @param id 订单ID
+     * @return 订单信息
+     */
+    @GetMapping("/{id}/status")
+    public GeneralResult<Order> getStatus(@PathVariable("id") Integer id) {
+        Order order = orderService.refreshStatus(id, paySuccessListener);
+        return GeneralResult.ok(order);
     }
 }

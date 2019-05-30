@@ -49,6 +49,15 @@ public class Order extends AbstractEntity {
      */
     private User user;
     /**
+     * 推广者ID
+     */
+    @Column(name = "promoter_id", length = 10)
+    private Integer promoterId;
+    /**
+     * 推广者用户对象
+     */
+    private User promoter;
+    /**
      * 商品ID
      */
     @Column(name = "commodity_id", length = 10, nullable = false)

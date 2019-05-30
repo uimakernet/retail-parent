@@ -4,6 +4,8 @@ import club.xyes.zkh.retail.commons.entity.User;
 import club.xyes.zkh.retail.service.basic.AbstractService;
 import club.xyes.zkh.retail.wechat.dto.WxOAuth2AccessToken;
 
+import java.util.List;
+
 /**
  * Create by 郭文梁 2019/5/18 0018 11:37
  * UserService
@@ -36,4 +38,36 @@ public interface UserService extends AbstractService<User> {
      * @return 刷新结果
      */
     User refreshUserInfo(User user, WxOAuth2AccessToken accessToken);
+
+    /**
+     * 通过推广码查找用户
+     *
+     * @param promoCode 推广码
+     * @return 用户
+     */
+    User findByPromoCode(String promoCode);
+
+    /**
+     * 设置用户角色为推广者
+     *
+     * @param user 用户
+     * @return 设置结果
+     */
+    User toPromoter(User user);
+
+    /**
+     * 设置用户角色为队长
+     *
+     * @param user 用户
+     * @return 设置结果
+     */
+    User toCaptain(User user);
+
+    /**
+     * 通过用户名或昵称搜索
+     *
+     * @param name 搜索内容
+     * @return user list
+     */
+    List<User> searchByName(String name);
 }

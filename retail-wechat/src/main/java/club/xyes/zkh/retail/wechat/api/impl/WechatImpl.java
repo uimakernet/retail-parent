@@ -1,5 +1,6 @@
 package club.xyes.zkh.retail.wechat.api.impl;
 
+import club.xyes.zkh.retail.commons.entity.Order;
 import club.xyes.zkh.retail.commons.utils.RandomUtils;
 import club.xyes.zkh.retail.wechat.api.Wechat;
 import club.xyes.zkh.retail.wechat.dto.*;
@@ -99,5 +100,10 @@ public class WechatImpl extends AbstractHttpApi implements Wechat {
     public WxUserInfo getUserInfo(String accessToken, String openId, String lang) {
         String apiUrl = String.format(GET_USER_INFO_URL, accessToken, openId, lang);
         return get(apiUrl, WxUserInfo.class, res -> res.get("errcode") == null);
+    }
+
+    @Override
+    public WxTradeInfo queryTrade(Order order) {
+        return new WxTradeInfo();
     }
 }
